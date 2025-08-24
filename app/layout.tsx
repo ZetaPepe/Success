@@ -1,39 +1,39 @@
 import type React from "react"
-import "@/app/globals.css"
-import { Work_Sans, Open_Sans } from "next/font/google"
 import type { Metadata } from "next"
-import { ThemeProvider } from "@/components/theme-provider"
-
-const workSans = Work_Sans({
-  subsets: ["latin"],
-  variable: "--font-work-sans",
-  display: "swap",
-})
-
-const openSans = Open_Sans({
-  subsets: ["latin"],
-  variable: "--font-open-sans",
-  display: "swap",
-})
+import { GeistSans } from "geist/font/sans"
+import { GeistMono } from "geist/font/mono"
+import { LanguageProvider } from "@/contexts/language-context"
+import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "HeroX - First GameFi Dapp | Play, Earn, Conquer",
-  description:
-    "Join the revolution of GameFi with HeroX - the first decentralized gaming platform where heroes earn real rewards through epic adventures.",
-    generator: 'v0.app'
+  title: "HeroX",
+  description: "HeroX",
+  generator: "HeroX",
 }
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode
-}) {
+}>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${workSans.variable} ${openSans.variable}`}>
-      <body className="font-sans">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          {children}
-        </ThemeProvider>
+    <html lang="en">
+      <head>
+        <style>{`
+html {
+  font-family: ${GeistSans.style.fontFamily};
+  --font-sans: ${GeistSans.variable};
+  --font-mono: ${GeistMono.variable};
+}
+        `}</style>
+        <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+      </head>
+      <body>
+        <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
   )
